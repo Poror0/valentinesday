@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С Днем Святого Валентина!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #323641;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+        }
+
+        .letter-image {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+        }
+
+        .animated-mail {
+            position: absolute;
+            height: 150px;
+            width: 200px;
+            transition: .4s;
+        }
+
+        .animated-mail .body {
+            position: absolute;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 0 100px 200px;
+            border-color: transparent transparent #e95f55 transparent;
+            z-index: 2;
+        }
+
+        .animated-mail .top-fold {
+            position: absolute;
+            top: 50px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 50px 100px 0 100px;
+            transform-origin: 50% 0%;
+            transition: transform .4s .4s, z-index .2s .4s;
+            border-color: #cf4a43 transparent transparent transparent;
+            z-index: 2;
+        }
+
+        .animated-mail .back-fold {
+            position: absolute;
+            bottom: 0;
+            width: 200px;
+            height: 100px;
+            background: #cf4a43;
+            z-index: 0;
+        }
+
+        .animated-mail .left-fold {
+            position: absolute;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 50px 0 50px 100px;
+            border-color: transparent transparent transparent #e15349;
+            z-index: 2;
+        }
+
+        .animated-mail .letter {
+            left: 20px;
+            bottom: 0px;
+            position: absolute;
+            width: 160px;
+            height: 60px;
+            background: white;
+            z-index: 1;
+            overflow: hidden;
+            transition: .4s .2s;
+        }
+
+        .animated-mail .letter .letter-border {
+            height: 10px;
+            width: 100%;
+            background: repeating-linear-gradient(
+                -45deg,
+                #cb5a5e,
+                #cb5a5e 8px,
+                transparent 8px,
+                transparent 18px
+            );
+        }
+
+        .animated-mail .letter .letter-title {
+            margin-top: 10px;
+            margin-left: 5px;
+            height: 10px;
+            width: 40%;
+            background: #cb5a5e;
+        }
+
+        .animated-mail .letter .letter-context {
+            margin-top: 10px;
+            margin-left: 5px;
+            height: 10px;
+            width: 20%;
+            background: #cb5a5e;
+        }
+
+        .animated-mail .letter .letter-stamp {
+            margin-top: 30px;
+            margin-left: 120px;
+            border-radius: 100%;
+            height: 30px;
+            width: 30px;
+            background: #cb5a5e;
+            opacity: 0.3;
+        }
+
+        .shadow {
+            position: absolute;
+            top: 200px;
+            left: 50%;
+            width: 400px;
+            height: 30px;
+            transition: .4s;
+            transform: translateX(-50%);
+            border-radius: 100%;
+            background: radial-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.0), rgba(0,0,0,0.0));
+        }
+
+        .letter-image:hover .animated-mail {
+            transform: translateY(50px);
+        }
+
+        .letter-image:hover .animated-mail .top-fold {
+            transition: transform .4s, z-index .2s;
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .letter-image:hover .animated-mail .letter {
+            height: 180px;
+        }
+
+        .letter-image:hover .shadow {
+            width: 250px;
+        }
+
+        .valentine-container {
+            display: none;
+            text-align: center;
+            background-color: #FFB6C1;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .valentine-container h1 {
+            color: #FF69B4;
+            margin-bottom: 1rem;
+        }
+
+        .gif-container {
+            margin: 1rem 0;
+        }
+
+        .gif-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .yes-btn, .no-btn {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .yes-btn {
+            background-color: #FF69B4;
+            color: white;
+            font-weight: bold;
+        }
+
+        .no-btn {
+            background-color: #FFC0CB;
+            color: #FF1493;
+            font-weight: bold;
+        }
+
+        .yes-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .glitch-text {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #FF1493;
+            text-shadow: 1px 1px 2px rgba(255, 20, 147, 0.7);
+            animation: glitch 1s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(-50%, 2px); }
+            25% { transform: translate(-50%, -2px); }
+            50% { transform: translate(-50%, 2px); }
+            75% { transform: translate(-50%, -2px); }
+            100% { transform: translate(-50%, 2px); }
+        }
+
+        @media (max-width: 600px) {
+            .valentine-container {
+                padding: 1rem;
+            }
+
+            .valentine-container h1 {
+                font-size: 1.5rem;
+            }
+
+            .yes-btn, .no-btn {
+                font-size: 0.9rem;
+            }
+        }
+
+        #question {
+            width: 500px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .page-text {
+            top: -120px;
+            position: absolute;
+            font-size: 2rem;
+            color: #FF69B4;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-text">Тебе пришло письмо! Открой его</div>
+        <div class="letter-image" id="letterImage">
+            <div class="animated-mail">
+                <div class="back-fold"></div>
+                <div class="letter">
+                    <div class="letter-border"></div>
+                    <div class="letter-title"></div>
+                    <div class="letter-context"></div>
+                    <div class="letter-stamp">
+                        <div class="letter-stamp-inner"></div>
+                    </div>
+                </div>
+                <div class="top-fold"></div>
+                <div class="body"></div>
+                <div class="left-fold"></div>
+                <div class="glitch-text">Made by pororo for personal use</div>
+            </div>
+            <div class="shadow"></div>
+        </div>
+
+        <div class="valentine-container" id="valentineContainer">
+            <h1 id="question">Ты будешь моим валентином?</h1>
+            <div class="gif-container">
+                <img src="https://media.tenor.com/CNJSyzMIkskAAAAj/bubu-dudu-sseeyall.gif" alt="Романтическая гифка" id="gif">
+            </div>
+            <div class="buttons">
+                <button id="yesBtn" class="yes-btn">Да</button>
+                <button id="noBtn" class="no-btn">Нет</button>
+            </div>
+            <div class="glitch-text">Made by pororo for personal use</div>
+        </div>
+    </div>
+
+    <script>
+        const letterImage = document.getElementById('letterImage');
+        const valentineContainer = document.getElementById('valentineContainer');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const gif = document.getElementById('gif');
+        const question = document.getElementById('question');
+        const pageText = document.querySelector('.page-text');
+
+        let noClickCount = 0;
+        const funnyTexts = [
+            "Ну пожалуйста?",
+            "Ты уверена?",
+            "Подумай еще раз!",
+            "Я буду грустить :(",
+            "Дай мне шанс!",
+            "Ладно, можешь нажать нет",
+            "Пошутил)"
+        ];
+
+        letterImage.addEventListener('click', () => {
+            letterImage.style.display = 'none';
+            valentineContainer.style.display = 'block';
+            document.body.style.backgroundColor = '#ffaacc';
+            pageText.style.display = 'none';
+        });
+
+        noBtn.addEventListener('click', () => {
+            noClickCount++;
+            if (noClickCount < funnyTexts.length) {
+                question.textContent = funnyTexts[noClickCount];
+            } else {
+                question.textContent = "Ты будешь моим валентином?";
+            }
+            yesBtn.style.transform = `scale(${1 + noClickCount * 0.5})`;
+        });
+
+        yesBtn.addEventListener('click', () => {
+            gif.src = "https://media1.tenor.com/m/heu_AkLRlGgAAAAd/bear-kiss-bear-kisses.gif";
+            question.textContent = "Спасибо!";
+            noBtn.style.display = 'none';
+            yesBtn.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
